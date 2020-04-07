@@ -1,0 +1,7 @@
+[
+  "Haushalt",
+  "Einkauf",
+  "Arbeit",
+  "Organisatorisches",
+  "Schule"
+]

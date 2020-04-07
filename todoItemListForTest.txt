@@ -1,0 +1,12 @@
+[
+  {
+    "Text": "Staubsaugen",
+    "CreatedAt": "2020-03-26T15:35:36.3148406+01:00",
+    "Tag": "Haushalt"
+  },
+  {
+    "Text": "Putzen",
+    "CreatedAt": "2020-03-26T15:35:36.3158439+01:00",
+    "Tag": "Haushalt"
+  }
+]

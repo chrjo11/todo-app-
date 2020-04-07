@@ -1,0 +1,136 @@
+﻿<Window x:Class="TodoApp.MVVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TodoApp.MVVM"
+        xmlns:vm="clr-namespace:TodoApp.MVVM.Converter"
+        xmlns:system="clr-namespace:System;assembly=System"
+        xmlns:c="clr-namespace:TodoApp.MVVM.Converter"
+        mc:Ignorable="d"
+        Title="MainWindow">
+    <Window.Resources>
+        <c:DateTimeConverter x:Key="DateTimeConverter"/>
+        <!-- zuerst: Namespace c: für Converter hinzugefügt, Typ und Schlüssel: DateTimeConverter -->
+        <!-- Ressource ist ein Objekt, das an unterschiedlichen Stellen in der Anwendung erneut verwendet werden kann.-->
+        <!-- wird an die Kinder vererbt-->
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="{Binding PathPicture}"></ImageBrush>
+    </Window.Background>
+   
+
+    <Grid>
+        <!-- vorher:Background="AliceBlue"-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label  Width="100"
+                    Margin="3"
+                    Background="White"
+                VerticalAlignment="Top"
+                Content="Neues To do"/>
+            <TextBox Text="{Binding TodoItemText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="1"
+                     Width="150"
+                     />
+            <ComboBox SelectedIndex="0"
+                      SelectedItem="{Binding SelectedTag, Mode =TwoWay}"
+                      ItemsSource="{Binding Tags}"
+                      Grid.Row="2" 
+                      Width="150"/>
+
+            <!-- Text wird gebunden, TwoWay bedeutet, dass in beide Richtungen aktualisiert wird (Quelle&Ziel)
+                         und UpdateSourceTrigger: bei jeder Eigenschaftänderung soll das Ziel geändert werden-->
+            <Button Command="{Binding AddNewTodoCommand}" 
+                    Content="Hinzufügen"
+                    Grid.Row="3"
+                    Width="150"/>
+
+            <Button Command="{Binding NewCommandDownload}"
+                    Content="Download Hintergrund"
+                    Grid.Row="4"
+                    Width="150"/>
+            <!---<Image Source="{Binding PathPicture}" 
+                   Grid.Row="5"
+                   Stretch="Uniform"/> -->
+
+
+        </Grid>
+        <Grid  Grid.Column="1"     
+               Margin="10,0,0,0">
+            <!-- vorher: Background="AliceBlue"-->
+            <Grid.ColumnDefinitions>
+                <!-- ListBox-->
+                <ColumnDefinition Width="*"/>
+                <!-- Erledigt Button-->
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label  Content="To Do Liste"
+                    Background="White"
+                    Margin="10"
+                    HorizontalAlignment="Center"/>
+            <ListBox  ItemsSource="{Binding Items}"
+                      SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                      Grid.Row="1">
+                <!--SelectedIndex="{Binding SelectedIndex}"
+                    SelectionMode="Multiple" heißt man kann mehrere Items auswählen-->
+                <ListBox.ItemTemplate>
+                    <!-- Ruft das DataTemplate ab, mit dem die einzelnen Elemente angezeigt werden, oder legt dieses fest-->
+                    <DataTemplate>
+                        <!--DataTemplate beschreibt die visuelle Struktur eines Datenobjekts; 
+                         wie genau ein Element der Auflistung dargestellt wird.-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Text}"
+                                       TextWrapping="Wrap"
+                                       Grid.Column="0"/>
+                            <!--stellt Anzeige kleiner Mengen fließenden Inhalts bereit.-->
+                            <TextBlock Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}, ConverterParameter=1}" 
+                                       Grid.Column="1"/>
+                            <!-- StringFormat=dd.MM.yyyy-->
+                            <!-- Converter: Ruft den zu verwendenden Konverter ab oder legt diesen fest-->
+                            <!-- StaticResource: unveränderlich: Keine Änderung möglich: ein Verweis auf eine bereits definierte Ressource wird gesucht-->
+                            <!-- DynamicResource: Resource wird zur Laufzeit zugeordnet: dieser Wert wird als Verweis auf eine definierte Ressource festgelegt-->
+                            <TextBlock Text="{Binding Tag}"
+                                       Grid.Column="2"/>
+                            <!-- Werden an TodoItemModel properties gebunden -->
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <!--ItemTemplate-Eigenschaft wird verwendet, um eine benutzerdefinierte Benutzeroberfläche zum Anzeigen der Datenelemente zu definieren. -->
+            </ListBox>
+            <Button Grid.Column="3"
+                    Grid.Row="2"
+                    Command="{Binding RemoveTodoCommand}"
+                    Width="100" Height="20"
+                    Content="Erledigt" />
+            <Button Grid.Column="3"
+                    Grid.Row="4"
+                    Width="100" Height="20"
+                    Content="Alle Erledigt" 
+                    Margin="10"
+                    Command="{Binding RemoveAllTodoCommand}"/>
+        </Grid>
+    </Grid>
+</Window>
