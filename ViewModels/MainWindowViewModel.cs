@@ -74,6 +74,7 @@ namespace TodoApp.MVVM.Converter
             }
         }
 
+
         private string _selectedTag; 
         public string SelectedTag //property für ComboBox: ausgewählter Tag soll dem TodoItemModel Tag zugewiesen bekommen
         {
