@@ -15,8 +15,8 @@
     "Tag": "Haushalt"
   },
   {
-    "Text": "Müll entsorgen",
-    "CreatedAt": "2020-03-25T14:25:52.707042+01:00",
+    "Text": "Staubsaugen",
+    "CreatedAt": "2020-04-08T10:40:24.1595126+02:00",
     "Tag": "Haushalt"
   }
 ]
