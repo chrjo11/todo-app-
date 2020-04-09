@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TodoApp.MVVM"
+        xmlns:local="clr-namespace:TodoApp.MVVM.Views.UserControls"
         xmlns:vm="clr-namespace:TodoApp.MVVM.Converter"
         xmlns:system="clr-namespace:System;assembly=System"
         xmlns:c="clr-namespace:TodoApp.MVVM.Converter"
@@ -31,35 +31,16 @@
                 <RowDefinition Height="30" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label  Width="100"
                     Margin="3"
                     Background="White"
                 VerticalAlignment="Top"
                 Content="Neues To do"/>
-            <TextBox Text="{Binding TodoItemText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Grid.Row="1"
-                     Width="150"
-                     />
-            <ComboBox SelectedIndex="0"
-                      SelectedItem="{Binding SelectedTag, Mode =TwoWay}"
-                      ItemsSource="{Binding Tags}"
-                      Grid.Row="2" 
-                      Width="150"/>
-
-            <!-- Text wird gebunden, TwoWay bedeutet, dass in beide Richtungen aktualisiert wird (Quelle&Ziel)
-                         und UpdateSourceTrigger: bei jeder Eigenschaftänderung soll das Ziel geändert werden-->
-            <Button Command="{Binding AddNewTodoCommand}" 
-                    Content="Hinzufügen"
-                    Grid.Row="3"
-                    Width="150"/>
-
+            <local:NewTodoInfo Grid.Row="1"/>
             <Button Command="{Binding NewCommandDownload}"
                     Content="Download Hintergrund"
-                    Grid.Row="4"
+                    Grid.Row="2"
                     Width="150"/>
             <!---<Image Source="{Binding PathPicture}" 
                    Grid.Row="5"
