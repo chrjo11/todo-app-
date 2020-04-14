@@ -7,6 +7,7 @@
         xmlns:vm="clr-namespace:TodoApp.MVVM.Converter"
         xmlns:system="clr-namespace:System;assembly=System"
         xmlns:c="clr-namespace:TodoApp.MVVM.Converter"
+
         mc:Ignorable="d"
         Title="MainWindow">
     <Window.Resources>
@@ -16,10 +17,9 @@
         <!-- wird an die Kinder vererbt-->
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="{Binding PathPicture}"></ImageBrush>
+        <ImageBrush ImageSource="http://hintergrundbilder-pc.de/hintergrundbilder-fruehling-06-bilder/bilder-1920x1080/fruehling-107.jpg"></ImageBrush>
     </Window.Background>
-   
-
+    <!-- als binding: ImageSource="{Binding PathPicture}"-->
     <Grid>
         <!-- vorher:Background="AliceBlue"-->
         <Grid.ColumnDefinitions>
@@ -32,21 +32,19 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label  Width="100"
-                    Margin="3"
-                    Background="White"
-                VerticalAlignment="Top"
-                Content="Neues To do"/>
+            <Label  Content="Neues To do"
+                    Margin="0,5,0,0"
+                    FontSize="14"
+                    FontStyle="Normal"
+                    FontWeight="DemiBold"
+                    HorizontalContentAlignment="Center"/>
             <local:NewTodoInfo Grid.Row="1"/>
             <Button Command="{Binding NewCommandDownload}"
                     Content="Download Hintergrund"
                     Grid.Row="2"
+                    Margin="15"
                     Width="150"/>
-            <!---<Image Source="{Binding PathPicture}" 
-                   Grid.Row="5"
-                   Stretch="Uniform"/> -->
-
-
+   
         </Grid>
         <Grid  Grid.Column="1"     
                Margin="10,0,0,0">
@@ -64,9 +62,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label  Content="To Do Liste"
-                    Background="White"
-                    Margin="10"
-                    HorizontalAlignment="Center"/>
+                    FontSize="14"
+                    FontStyle="Normal"
+                    FontWeight="DemiBold"
+                    HorizontalContentAlignment="Center"
+                    Margin="5"/>
             <ListBox  ItemsSource="{Binding Items}"
                       SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                       Grid.Row="1">
