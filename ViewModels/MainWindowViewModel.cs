@@ -111,13 +111,14 @@ namespace TodoApp.MVVM.Converter
 
         private async void NewDownloadAsync()
         {
-            string url = "http://www.hintergrundbilder-pc.de/hintergrundbilder-fruehling-02-bilder/bilder-1920x1080/fruehling-025.jpg";
+            string url = "http://hintergrundbilder-pc.de/hintergrundbilder-fruehling-06-bilder/bilder-1920x1080/fruehling-107.jpg";
+            //string url2 = "http://www.hintergrundbilder-pc.de/hintergrundbilder-fruehling-02-bilder/bilder-1920x1080/fruehling-025.jpg";
             //string url1 = "http://www.hintergrundbilder-pc.de/hintergrundbilder-sonnenuntergang-4k-04-bilder/bilder-3840x2160/sonnenuntergang-059.jpg";
             //await SaveImage(url); //liefert einen string zurück, da await den Task "auspackt" //man wartet bis die Methode ausgeführt wurde
             //RaisePropertyChanged(nameof(PathPicture));
             
             var imageData = await DownloadImage(url);
-            string imagePath = "C:\\01_Data\\Prj\\TodoApp.MVVM\\Hintergrundbild.png";
+            string imagePath = "C:\\01_Data\\Prj\\TodoApp.MVVM\\Hintergrundbild2.png";
             await SaveImage(imageData, imagePath);
             PathPicture = imagePath;
             RaisePropertyChanged(nameof(PathPicture));

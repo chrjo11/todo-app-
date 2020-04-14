@@ -5,28 +5,77 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TodoApp.MVVM.Views.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="200">
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="Style1"  TargetType="Button" >
+            <Setter Property="Background" Value="DodgerBlue" />
+            <Setter Property="FontWeight" Value="Regular" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="CordiaUPC" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="ClickMode" Value="Press" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="4" 
+                                BorderThickness="2"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center">
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True" >
+                    <Setter Property="Background" Value="RoyalBlue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Label Content="Schreibe ein neues Todo."
+               Grid.Row="0"
+               Width="150"
+               Margin="0,5,0,2"/>
         <TextBox Text="{Binding TodoItemText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Grid.Row="0"
-                     Width="150"
-                     />
+                 Grid.Row="1"
+                 Width="150"
+                 Margin="0,0,0,5"/>
+        <Label Content="Wähle ein Tag aus."
+               Grid.Row="2"
+               Width="150"
+               Margin="0,5,0,2"
+               />
         <ComboBox SelectedIndex="0"
-                      SelectedItem="{Binding SelectedTag, Mode =TwoWay}"
-                      ItemsSource="{Binding Tags}"
-                      Grid.Row="1" 
-                      Width="150"/>
+                  SelectedItem="{Binding SelectedTag, Mode =TwoWay}"
+                  ItemsSource="{Binding Tags}"
+                  Grid.Row="3" 
+                  Width="150"/>
 
         <!-- Text wird gebunden, TwoWay bedeutet, dass in beide Richtungen aktualisiert wird (Quelle&Ziel)
                          und UpdateSourceTrigger: bei jeder Eigenschaftänderung soll das Ziel geändert werden-->
+        <Label Content="Klick den Button zum Hinzufügen." 
+               Grid.Row="4"
+               Width="Auto"
+               Margin="0,15,0,2"/>
         <Button Command="{Binding AddNewTodoCommand}" 
-                    Content="Hinzufügen"
-                    Grid.Row="2"
-                    Width="150"/>
+                Content="Hinzufügen"
+                Style="{StaticResource Style1}"
+                Grid.Row="5"
+                Height="40"
+                Width="100"/>
+        
     </Grid>
 </UserControl>
