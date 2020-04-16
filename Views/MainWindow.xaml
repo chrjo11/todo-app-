@@ -7,7 +7,6 @@
         xmlns:vm="clr-namespace:TodoApp.MVVM.Converter"
         xmlns:system="clr-namespace:System;assembly=System"
         xmlns:c="clr-namespace:TodoApp.MVVM.Converter"
-
         mc:Ignorable="d"
         Title="MainWindow">
     <Window.Resources>
@@ -16,10 +15,12 @@
         <!-- Ressource ist ein Objekt, das an unterschiedlichen Stellen in der Anwendung erneut verwendet werden kann.-->
         <!-- wird an die Kinder vererbt-->
     </Window.Resources>
+    
     <Window.Background>
         <ImageBrush ImageSource="http://hintergrundbilder-pc.de/hintergrundbilder-fruehling-06-bilder/bilder-1920x1080/fruehling-107.jpg"></ImageBrush>
     </Window.Background>
     <!-- als binding: ImageSource="{Binding PathPicture}"-->
+    
     <Grid>
         <!-- vorher:Background="AliceBlue"-->
         <Grid.ColumnDefinitions>
@@ -43,7 +44,8 @@
                     Content="Download Hintergrund"
                     Grid.Row="2"
                     Margin="15"
-                    Width="150"/>
+                    Height="30"
+                    Width="170"/>
    
         </Grid>
         <Grid  Grid.Column="1"     
@@ -104,11 +106,13 @@
             <Button Grid.Column="3"
                     Grid.Row="2"
                     Command="{Binding RemoveTodoCommand}"
-                    Width="100" Height="20"
+                    Width="100" 
+                    Height="30"
                     Content="Erledigt" />
             <Button Grid.Column="3"
                     Grid.Row="4"
-                    Width="100" Height="20"
+                    Width="100" 
+                    Height="30"
                     Content="Alle Erledigt" 
                     Margin="10"
                     Command="{Binding RemoveAllTodoCommand}"/>
