@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace TodoApp.MVVM.Views.UserControls
 {
-    /// <summary>
-    /// Interaction logic for NewTodoInfo.xaml
-    /// </summary>
     public partial class NewTodoInfo : UserControl
     {
         public NewTodoInfo()

@@ -1,0 +1,87 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:control="clr-namespace:TodoApp.MVVM.Controls"
+                    >
+    <Style TargetType="control:CustomButton" >
+        <!--vorher: explicit style: x:Key="ButtonStyle1"
+            jetzt: implicit style: dh. für jeden Button wird der Style übernommen-->
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="CordiaUPC" />
+        <Setter Property="Background" Value="DodgerBlue" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimation To="LightGray"
+                                                        Storyboard.TargetName="Background"
+                                                        Storyboard.TargetProperty="Color"
+                                                        Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver" >
+                                    <Storyboard>
+                                        <ColorAnimation To="RoyalBlue"
+                                                        Storyboard.TargetName="Background"
+                                                        Storyboard.TargetProperty="Color"
+                                                        Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed" >
+                                    <Storyboard>
+                                        <ColorAnimation To="Red"
+                                                        Storyboard.TargetName="Background"
+                                                        Storyboard.TargetProperty="Color"
+                                                        Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CustomStates" >
+                                <VisualState x:Name="Clicked" >
+
+                                </VisualState>
+                                <VisualState x:Name="NeverClicked">
+                                    <Storyboard>
+                                        <ColorAnimation To="Green"
+                                                            Storyboard.TargetName="BorderLine"
+                                                            Storyboard.TargetProperty="Color" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border CornerRadius="4"
+                            BorderThickness="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" >
+                            </ContentPresenter>
+                            <Border.Background>
+                                <SolidColorBrush x:Name="Background" Color="DodgerBlue" />
+                            </Border.Background>
+
+                            <Border.BorderBrush>
+                                <SolidColorBrush x:Name="BorderLine" Color="DarkGray" />
+                            </Border.BorderBrush>
+
+
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!-- <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True" >
+                <Setter Property="Background" Value="RoyalBlue" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False" >
+                <Setter Property="Background" Value="LightGray" />
+            </Trigger>
+        </Style.Triggers> -->
+    </Style>
+</ResourceDictionary>
