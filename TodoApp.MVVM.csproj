@@ -61,10 +61,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\CustomButton.cs" />
+    <Compile Include="Controls\CustomTextBox.cs" />
     <Compile Include="Views\UserControls\NewTodoInfo.xaml.cs">
       <DependentUpon>NewTodoInfo.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\TextBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
