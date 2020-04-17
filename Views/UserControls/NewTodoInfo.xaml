@@ -28,10 +28,11 @@
                Width="150"
                Margin="0,5,0,2">
         </Label>
-        <TextBox Text="{Binding TodoItemText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 Name="TodoItemTextBox"
+        <controls:CustomTextBox
+                 Text="{Binding TodoItemText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="1"
                  Width="150"
+                 Height="25"
                  Margin="0,0,0,5"/>
         <Label Content="Wähle ein Tag aus."
                Grid.Row="2"
