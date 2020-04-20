@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TodoApp.MVVM.Views.UserControls"
-        xmlns:vm="clr-namespace:TodoApp.MVVM.Converter"
+        xmlns:vm="clr-namespace:TodoApp.MVVM.ViewModels"
+        xmlns:me="clr-namespace:TodoApp.MVVM.MarkupExtensions"
         xmlns:system="clr-namespace:System;assembly=System"
         xmlns:c="clr-namespace:TodoApp.MVVM.Converter"
         mc:Ignorable="d"
-        Title="MainWindow">
+        Title="MainWindow"
+        DataContext="{me:ViewModelBinding ViewModelType=vm:MainWindowViewModel}">
     <Window.Resources>
         <c:DateTimeConverter x:Key="DateTimeConverter"/>
         <!-- zuerst: Namespace c: für Converter hinzugefügt, Typ und Schlüssel: DateTimeConverter -->
@@ -33,7 +35,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label  Content="Neues To do"
+            <Label  Content="Neues Todo"
                     Margin="0,5,0,0"
                     FontSize="14"
                     FontStyle="Normal"
