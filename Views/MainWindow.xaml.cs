@@ -25,9 +25,6 @@ namespace TodoApp.MVVM
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(new TodoItemFileService(), new TagService()); //DataContext in Code-Behind Datei festgelegt, vorher in MainWindow.xaml
-                                                                              //legt neues Object an von MainWindowViewModel 
-                                                                              //und man übergibt Parameter: neues Object angelegt TodoItemFileService
         }
     }
 }

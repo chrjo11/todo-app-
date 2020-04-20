@@ -13,5 +13,9 @@ namespace TodoApp.MVVM
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            IoCConfiguration.Initialize();
+        }
     }
 }

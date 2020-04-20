@@ -14,7 +14,6 @@ namespace TodoApp.MVVM.Converter
     class TodoItemFileService : ITodoItemService //implementiert das Interface: erbt vom Interface, Methoden bekommen in der abgeleiteten Klasse eine Funktionalität
     {
         private readonly string _path;
-        public List<TodoItemModel> WrittenModels { get; private set; }
 
         public IEnumerable<TodoItemModel> ReadTodoItems() //Liest die Datei aus und gibt die Liste mit den Lines zurück 
         {
@@ -39,10 +38,9 @@ namespace TodoApp.MVVM.Converter
         
         }
 
-        public TodoItemFileService(string path = @"C:\01_Data\Prj\TodoApp.MVVM\test1.txt", List<TodoItemModel> todoItemModels = null)
+        public TodoItemFileService(IAppConfiguration appConfiguration) //man übergibt die Abhängigkeit dem Konstruktor
         {
-            _path = path;
-            WrittenModels = todoItemModels;
+            _path = appConfiguration.TodoItemFilePath; //greift auf das property zu
         }
     }
 }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TodoApp.MVVM.Services;
 
 namespace TodoApp.MVVM
 {
@@ -28,9 +29,9 @@ namespace TodoApp.MVVM
             }
         }
 
-        public TagService(string path = @"C:\01_Data\Prj\TodoApp.MVVM\tags.txt") //optionale Parameter
+        public TagService(IAppConfiguration appConfiguration) //optionale Parameter
         {
-            _path = path;
+            _path = appConfiguration.TagFilePath;
         }
     }
 }

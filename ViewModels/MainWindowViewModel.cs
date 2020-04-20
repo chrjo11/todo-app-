@@ -17,7 +17,7 @@ using TodoApp.MVVM.Commands;
 using TodoApp.MVVM.Converter;
 using TodoApp.MVVM.Services;
 
-namespace TodoApp.MVVM.Converter
+namespace TodoApp.MVVM.ViewModels
 {
     class MainWindowViewModel : ViewModelBase //ViewModelBase: benachtrichtigt, wenn sich ein Property/Eigenschaftwert:z.B string geändert hat 
     {
@@ -87,7 +87,9 @@ namespace TodoApp.MVVM.Converter
 
         public string PathPicture { get; set; } //property für den Pfad vom Bild
         
-        public MainWindowViewModel(ITodoItemService todoItemService, ITagService tagService) //Konstruktor mit Parameterübergabe
+        public MainWindowViewModel(
+            ITodoItemService todoItemService,
+            ITagService tagService) //Konstruktor mit Parameterübergabe
                                                                      //in MainWindow.xaml.cs wird neues Object von MWVM angelegt und Parameter übergeben: neues Object vom Typ TodoItemFileService
         {
             AddNewTodoCommand = new ActionCommand(AddNewTodoItem); //man erzeugt ein Object und übergibt die Binding-Quelle/Methode
