@@ -17,11 +17,15 @@
         <!-- Ressource ist ein Objekt, das an unterschiedlichen Stellen in der Anwendung erneut verwendet werden kann.-->
         <!-- wird an die Kinder vererbt-->
     </Window.Resources>
-    
+        
     <Window.Background>
-        <ImageBrush ImageSource="http://hintergrundbilder-pc.de/hintergrundbilder-fruehling-06-bilder/bilder-1920x1080/fruehling-107.jpg"></ImageBrush>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
+            <GradientStop Color="AliceBlue" Offset="0" />
+            <GradientStop Color="CornflowerBlue"  Offset="1.0" />
+        </LinearGradientBrush>
     </Window.Background>
-    <!-- als binding: ImageSource="{Binding PathPicture}"-->
+    <!-- als binding: ImageSource="{Binding PathPicture}" wird mit Button-Klick heruntergeladen und ersetzt
+         oder Bild verwenden: <ImageBrush ImageSource="http://hintergrundbilder-pc.de/hintergrundbilder-fruehling-06-bilder/bilder-1920x1080/fruehling-107.jpg"></ImageBrush>-->
     
     <Grid>
         <!-- vorher:Background="AliceBlue"-->

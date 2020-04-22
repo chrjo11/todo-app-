@@ -73,7 +73,6 @@ namespace TodoApp.MVVM.ViewModels
                 }
             }
         }
-        //einfach so
 
         private string _selectedTag; 
         public string SelectedTag //property für ComboBox: ausgewählter Tag soll dem TodoItemModel Tag zugewiesen bekommen
@@ -90,7 +89,7 @@ namespace TodoApp.MVVM.ViewModels
         public MainWindowViewModel(
             ITodoItemService todoItemService,
             ITagService tagService) //Konstruktor mit Parameterübergabe
-                                                                     //in MainWindow.xaml.cs wird neues Object von MWVM angelegt und Parameter übergeben: neues Object vom Typ TodoItemFileService
+                                    //in MainWindow.xaml.cs wird neues Object von MWVM angelegt und Parameter übergeben: neues Object vom Typ TodoItemFileService
         {
             AddNewTodoCommand = new ActionCommand(AddNewTodoItem); //man erzeugt ein Object und übergibt die Binding-Quelle/Methode
                                                                    //Ziel: Wenn der Hinzufügen Button gedrückt wird, soll der Text in der TextBox der ListBox hinzugefügt werden
@@ -116,12 +115,10 @@ namespace TodoApp.MVVM.ViewModels
             string url = "http://hintergrundbilder-pc.de/hintergrundbilder-fruehling-06-bilder/bilder-1920x1080/fruehling-107.jpg";
             //string url2 = "http://www.hintergrundbilder-pc.de/hintergrundbilder-fruehling-02-bilder/bilder-1920x1080/fruehling-025.jpg";
             //string url1 = "http://www.hintergrundbilder-pc.de/hintergrundbilder-sonnenuntergang-4k-04-bilder/bilder-3840x2160/sonnenuntergang-059.jpg";
-            //await SaveImage(url); //liefert einen string zurück, da await den Task "auspackt" //man wartet bis die Methode ausgeführt wurde
-            //RaisePropertyChanged(nameof(PathPicture));
             
             var imageData = await DownloadImage(url);
             string imagePath = "C:\\01_Data\\Prj\\TodoApp.MVVM\\Hintergrundbild2.png";
-            await SaveImage(imageData, imagePath);
+            await SaveImage(imageData, imagePath); //liefert einen string zurück, da await den Task "auspackt"; man wartet bis die Methode ausgeführt wurde
             PathPicture = imagePath;
             RaisePropertyChanged(nameof(PathPicture));
         }
@@ -139,24 +136,9 @@ namespace TodoApp.MVVM.ViewModels
             using (FileStream fileStream = new FileStream(pathPic, FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 //copy the content from response to filestream
-                await responseMessage.Content.CopyToAsync(fileStream); //content ist ein Bild, as durch FileStream erstellt wurde
+                await responseMessage.Content.CopyToAsync(fileStream); //content ist ein Bild, das durch FileStream erstellt wurde
             }
         } 
-
-        /*
-        private async Task<string> SaveImage(string url) //Methoden, die mit async gekennzeichnet sind, geben gen. Par. aus
-        {
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = await httpClient.GetAsync(url); //enthält viele Infos: status code, RequestMessage
-            response.EnsureSuccessStatusCode(); //wirft Exception, wenn StatusCode false ist //true, dh. Anfrage wurde erfolgreich bearbeitet
-            //Initialisiert eine neue Instanz der FileStream-Klasse für das angegebene Dateihandle mit den Angaben für die Lese-/Schreibberechtigung, den Besitz der FileStream-Instanz und die Puffergröße.
-            using (FileStream fileStream = new FileStream("C:\\01_Data\\Prj\\TodoApp.MVVM\\Hintergrundbild.png", FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                //copy the content from response to filestream
-                await response.Content.CopyToAsync(fileStream); //content ist ein Bild, as durch FileStream erstellt wurde
-                return PathPicture = fileStream.Name;
-            }
-        } */
 
         private void AddNewTodoItem() //Methode, um neues Item der ListBox anzuheften durch Klicken des Hinzufügen-Buttons
         {
