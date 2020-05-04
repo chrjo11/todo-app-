@@ -20,6 +20,16 @@
                 <ControlTemplate TargetType="TextBox">
                     <Grid>
                         <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Unfocused" />
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <ColorAnimation To="Black"
+                                                        Storyboard.TargetName="BorderLine"
+                                                        Storyboard.TargetProperty="Color" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
@@ -31,19 +41,6 @@
                                 </VisualState>
 
                             </VisualStateGroup>
-                            <!--<VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Unfocused"/>
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ControlBorder"
-                                                                       Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame Value="{StaticResource FocusedBackgroundBrush}"
-                                                                    KeyTime="0:0:0">
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>-->
                             <VisualStateGroup x:Name="CustomStates" >
                                 <VisualState x:Name="Hint" />
                                 <VisualState x:Name="HintHidden">
@@ -59,7 +56,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="ControlBorder"
-                                BorderThickness="2" 
+                                BorderThickness="1" 
                                 Background="LightGray">
                             <TextBox Text="{TemplateBinding Text}" />
                             <!--<ScrollViewer Margin="0"
@@ -73,7 +70,7 @@
                                    Opacity="1"
                                    VerticalAlignment="Center"
                                    Margin="8, 0, 0, 0"
-                                   Foreground="LightGray"
+                                   Foreground="DarkGray"
                                    FontStyle="Italic" />
                     </Grid>
                 </ControlTemplate>

@@ -29,7 +29,7 @@ namespace TodoApp.MVVM
             }
         }
 
-        public TagService(IAppConfiguration appConfiguration) //optionale Parameter
+        public TagService(IAppConfiguration appConfiguration)
         {
             _path = appConfiguration.TagFilePath;
         }

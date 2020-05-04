@@ -1,15 +1,19 @@
-﻿<Window x:Class="TodoApp.MVVM.MainWindow"
+﻿<mah:MetroWindow x:Class="TodoApp.MVVM.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TodoApp.MVVM.Views.UserControls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:TodoApp.MVVM.ViewModels"
         xmlns:me="clr-namespace:TodoApp.MVVM.MarkupExtensions"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:system="clr-namespace:System;assembly=System"
         xmlns:c="clr-namespace:TodoApp.MVVM.Converter"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="Todo App"
+        WindowTitleBrush="SkyBlue"
+        BorderThickness="2"
         DataContext="{me:ViewModelBinding ViewModelType=vm:MainWindowViewModel}">
     <Window.Resources>
         <c:DateTimeConverter x:Key="DateTimeConverter"/>
@@ -17,42 +21,50 @@
         <!-- Ressource ist ein Objekt, das an unterschiedlichen Stellen in der Anwendung erneut verwendet werden kann.-->
         <!-- wird an die Kinder vererbt-->
     </Window.Resources>
-        
-    <Window.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" >
-            <GradientStop Color="AliceBlue" Offset="0" />
-            <GradientStop Color="CornflowerBlue"  Offset="1.0" />
-        </LinearGradientBrush>
-    </Window.Background>
+
+    <!--<Window.Background>
+        <ImageBrush ImageSource="{Binding PathPicture}" />
+    </Window.Background>-->
     <!-- als binding: ImageSource="{Binding PathPicture}" wird mit Button-Klick heruntergeladen und ersetzt
          oder Bild verwenden: <ImageBrush ImageSource="http://hintergrundbilder-pc.de/hintergrundbilder-fruehling-06-bilder/bilder-1920x1080/fruehling-107.jpg"></ImageBrush>-->
-    
-    <Grid>
-        <!-- vorher:Background="AliceBlue"-->
+
+    <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid>
+        <Grid Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="23*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label  Content="Neues Todo"
-                    Margin="0,5,0,0"
-                    FontSize="14"
+                    Margin="0,5,0,0.2"
+                    Foreground="DodgerBlue"
+                    FontSize="17"
                     FontStyle="Normal"
                     FontWeight="DemiBold"
-                    HorizontalContentAlignment="Center"/>
-            <local:NewTodoInfo Grid.Row="1"/>
-            <Button Command="{Binding NewCommandDownload}"
-                    Content="Download Hintergrund"
+                    FontFamily="Times New Roman"
+                    HorizontalContentAlignment="Center" Grid.ColumnSpan="2"/>
+            <local:NewTodoInfo
+                               Background="AliceBlue" Grid.ColumnSpan="2" Margin="0,31,0,61.2" Grid.RowSpan="3"/>
+            <!--<Button Command="{Binding NewCommandDownload}"
                     Grid.Row="2"
-                    Margin="15"
+                    Margin="70,15.4,70,16.2"
                     Height="30"
-                    Width="170"/>
-   
+                    Width="60" 
+                    Foreground="White"
+                    Background="DodgerBlue"
+                    ToolTip="Zum Download eines Hintergrundbildes klicken." Grid.ColumnSpan="2">
+                <materialDesign:PackIcon Kind="Download" />
+            </Button>-->
+            <!--Download-Button funktioniert nur, wenn kein Hintergrund festgelegt ist!-->
+
         </Grid>
         <Grid  Grid.Column="1"     
                Margin="10,0,0,0">
@@ -70,14 +82,18 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label  Content="To Do Liste"
-                    FontSize="14"
+                    FontSize="17"
                     FontStyle="Normal"
                     FontWeight="DemiBold"
+                    Foreground="DodgerBlue"
+                    FontFamily="Times New Roman"
                     HorizontalContentAlignment="Center"
                     Margin="5"/>
             <ListBox  ItemsSource="{Binding Items}"
                       SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                      Grid.Row="1">
+                      Grid.Row="1"
+                      BorderThickness="2"
+                      BorderBrush="LightBlue">
                 <!--SelectedIndex="{Binding SelectedIndex}"
                     SelectionMode="Multiple" heißt man kann mehrere Items auswählen-->
                 <ListBox.ItemTemplate>
@@ -93,16 +109,19 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding Text}"
                                        TextWrapping="Wrap"
-                                       Grid.Column="0"/>
+                                       Grid.Column="0"
+                                       FontSize="12"/>
                             <!--stellt Anzeige kleiner Mengen fließenden Inhalts bereit.-->
                             <TextBlock Text="{Binding CreatedAt, Converter={StaticResource DateTimeConverter}, ConverterParameter=1}" 
-                                       Grid.Column="1"/>
+                                       Grid.Column="1"
+                                       FontSize="12"/>
                             <!-- StringFormat=dd.MM.yyyy-->
                             <!-- Converter: Ruft den zu verwendenden Konverter ab oder legt diesen fest-->
                             <!-- StaticResource: unveränderlich: Keine Änderung möglich: ein Verweis auf eine bereits definierte Ressource wird gesucht-->
                             <!-- DynamicResource: Resource wird zur Laufzeit zugeordnet: dieser Wert wird als Verweis auf eine definierte Ressource festgelegt-->
                             <TextBlock Text="{Binding Tag}"
-                                       Grid.Column="2"/>
+                                       Grid.Column="2"
+                                       FontSize="12"/>
                             <!-- Werden an TodoItemModel properties gebunden -->
                         </Grid>
                     </DataTemplate>
@@ -112,16 +131,24 @@
             <Button Grid.Column="3"
                     Grid.Row="2"
                     Command="{Binding RemoveTodoCommand}"
-                    Width="100" 
+                    Width="60" 
                     Height="30"
-                    Content="Erledigt" />
+                    Background="DodgerBlue"
+                    Foreground="White"
+                    ToolTip="Ausgewähltes Todo Item löschen.">
+                <materialDesign:PackIcon Kind="RemoveCircle" />
+            </Button>
             <Button Grid.Column="3"
                     Grid.Row="4"
-                    Width="100" 
+                    Width="60" 
                     Height="30"
-                    Content="Alle Erledigt" 
                     Margin="10"
-                    Command="{Binding RemoveAllTodoCommand}"/>
+                    Foreground="White"
+                    Background="DodgerBlue"
+                    Command="{Binding RemoveAllTodoCommand}"
+                    ToolTip="Alle Todo Items aus der Liste löschen.">
+                <materialDesign:PackIcon Kind="DatabaseRemove" />
+            </Button>
         </Grid>
     </Grid>
-</Window>
+</mah:MetroWindow>

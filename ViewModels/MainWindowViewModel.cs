@@ -138,6 +138,7 @@ namespace TodoApp.MVVM.ViewModels
                 //copy the content from response to filestream
                 await responseMessage.Content.CopyToAsync(fileStream); //content ist ein Bild, das durch FileStream erstellt wurde
             }
+
         } 
 
         private void AddNewTodoItem() //Methode, um neues Item der ListBox anzuheften durch Klicken des Hinzufügen-Buttons

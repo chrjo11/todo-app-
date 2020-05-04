@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TodoApp.MVVM.Views.UserControls"
              xmlns:controls="clr-namespace:TodoApp.MVVM.Controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -13,10 +15,9 @@
                 ... >
         </Style>
     </UserControl.Resources>-->
-    
-    <Grid>
+
+    <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -26,8 +27,9 @@
         <Label Content="Schreibe ein neues Todo."
                Grid.Row="0"
                Width="150"
-               Margin="0,5,0,2">
-        </Label>
+               FontWeight="Medium"
+               FontSize="12"
+               Margin="0,5,0,2" />
         <controls:CustomTextBox
                  Text="{Binding TodoItemText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="1"
@@ -37,26 +39,29 @@
         <Label Content="Wähle ein Tag aus."
                Grid.Row="2"
                Width="150"
+               FontWeight="Medium"
+               FontSize="12"
                Margin="0,5,0,2"
                />
         <ComboBox SelectedIndex="0"
                   SelectedItem="{Binding SelectedTag, Mode =TwoWay}"
                   ItemsSource="{Binding Tags}"
                   Grid.Row="3" 
+                  FontSize="12"
                   Width="150"/>
 
         <!-- Text wird gebunden, TwoWay bedeutet, dass in beide Richtungen aktualisiert wird (Quelle&Ziel)
                          und UpdateSourceTrigger: bei jeder Eigenschaftänderung soll das Ziel geändert werden-->
-        <Label Content="Klick den Button zum Hinzufügen." 
-               Grid.Row="4"
-               Width="Auto"
-               Margin="0,15,0,2"/>
-        <controls:CustomButton 
-                Command="{Binding AddNewTodoCommand}" 
-                Content="Hinzufügen"
-                Grid.Row="5"
-                Height="40"
-                Width="100" />
+        
+        <controls:CustomButton Command="{Binding AddNewTodoCommand}" 
+                               Grid.Row="4"
+                               Height="30"
+                               Width="60"
+                               Foreground="White"
+                               Margin="12"
+                               ToolTip="Zum Hinzufügen des Todos diesen Button klicken.">
+            <materialDesign:PackIcon Kind="Add" />
+        </controls:CustomButton>
         <!--vorher: Style="{StaticResource ButtonStyle1}" explicit style
             jetzt: ButtonStyle.xaml: implicit style
             und vorher: Button -->

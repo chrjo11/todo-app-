@@ -55,7 +55,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border CornerRadius="4"
-                            BorderThickness="2">
+                                BorderThickness="2">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center" >
                             </ContentPresenter>
