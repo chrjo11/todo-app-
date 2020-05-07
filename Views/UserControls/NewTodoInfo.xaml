@@ -8,6 +8,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
+             Background="{DynamicResource MaterialDesignPaper}"
              d:DesignHeight="300" d:DesignWidth="300">
 
     <!--vorher: <UserControl.Resources>
@@ -18,6 +19,8 @@
 
     <Grid >
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -41,25 +44,43 @@
                Width="150"
                FontWeight="Medium"
                FontSize="12"
-               Margin="0,5,0,2"
-               />
-        <ComboBox SelectedIndex="0"
-                  SelectedItem="{Binding SelectedTag, Mode =TwoWay}"
-                  ItemsSource="{Binding Tags}"
-                  Grid.Row="3" 
-                  FontSize="12"
-                  Width="150"/>
+               Margin="0,5,0,2" />
+        <ComboBox   FontSize="12"
+                    Grid.Row="3"
+                    SelectedIndex="0"
+                    HorizontalAlignment="Center"
+                    SelectedItem="{Binding SelectedTag, Mode=TwoWay}"
+                    ItemsSource="{Binding Tags}"
+                    MinWidth="150"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource SecondaryAccentBrush}"
+                    materialDesign:ColorZoneAssist.Mode="Inverted">
+            <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ComboBox.ItemsPanel>
+        </ComboBox>
 
         <!-- Text wird gebunden, TwoWay bedeutet, dass in beide Richtungen aktualisiert wird (Quelle&Ziel)
                          und UpdateSourceTrigger: bei jeder Eigenschaftänderung soll das Ziel geändert werden-->
-        
+        <Label Content="Wähle die Priorität aus."
+               Grid.Row="4"
+               Width="150"
+               FontWeight="Medium"
+               FontSize="12"
+               Margin="0,15,0,2"/>
+        <materialDesign:RatingBar Value="{Binding Priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  Grid.Row="5"
+                                  HorizontalAlignment="Center"
+                                  Margin="0,5,0,2"/>
         <controls:CustomButton Command="{Binding AddNewTodoCommand}" 
-                               Grid.Row="4"
+                               Grid.Row="6"
                                Height="30"
                                Width="60"
-                               Foreground="White"
                                Margin="12"
-                               ToolTip="Zum Hinzufügen des Todos diesen Button klicken.">
+                               ToolTip="Zum Hinzufügen des Todos diesen Button klicken."
+                               >
             <materialDesign:PackIcon Kind="Add" />
         </controls:CustomButton>
         <!--vorher: Style="{StaticResource ButtonStyle1}" explicit style

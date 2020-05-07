@@ -9,9 +9,11 @@
         xmlns:me="clr-namespace:TodoApp.MVVM.MarkupExtensions"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:system="clr-namespace:System;assembly=System"
+        xmlns:controls="clr-namespace:TodoApp.MVVM.Controls"
         xmlns:c="clr-namespace:TodoApp.MVVM.Converter"
         mc:Ignorable="d"
         Title="Todo App"
+        Background="{DynamicResource MaterialDesignPaper}"
         WindowTitleBrush="SkyBlue"
         BorderThickness="2"
         DataContext="{me:ViewModelBinding ViewModelType=vm:MainWindowViewModel}">
@@ -28,12 +30,12 @@
     <!-- als binding: ImageSource="{Binding PathPicture}" wird mit Button-Klick heruntergeladen und ersetzt
          oder Bild verwenden: <ImageBrush ImageSource="http://hintergrundbilder-pc.de/hintergrundbilder-fruehling-06-bilder/bilder-1920x1080/fruehling-107.jpg"></ImageBrush>-->
 
-    <Grid Background="AliceBlue">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Background="AliceBlue">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="17*"/>
                 <ColumnDefinition Width="23*"/>
@@ -44,15 +46,17 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label  Content="Neues Todo"
-                    Margin="0,5,0,0.2"
+                    Margin="0,3,0,0"
                     Foreground="DodgerBlue"
                     FontSize="17"
                     FontStyle="Normal"
                     FontWeight="DemiBold"
                     FontFamily="Times New Roman"
-                    HorizontalContentAlignment="Center" Grid.ColumnSpan="2"/>
-            <local:NewTodoInfo
-                               Background="AliceBlue" Grid.ColumnSpan="2" Margin="0,31,0,61.2" Grid.RowSpan="3"/>
+                    HorizontalContentAlignment="Center" 
+                    Grid.ColumnSpan="2"/>
+            <local:NewTodoInfo Grid.ColumnSpan="2" 
+                               Margin="0,40,0,0"
+                               Grid.RowSpan="3"/>
             <!--<Button Command="{Binding NewCommandDownload}"
                     Grid.Row="2"
                     Margin="70,15.4,70,16.2"
@@ -68,11 +72,10 @@
         </Grid>
         <Grid  Grid.Column="1"     
                Margin="10,0,0,0">
-            <!-- vorher: Background="AliceBlue"-->
             <Grid.ColumnDefinitions>
                 <!-- ListBox-->
                 <ColumnDefinition Width="*"/>
-                <!-- Erledigt Button-->
+                <!-- Erledigt Button & Alle Erledigt Button-->
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -105,6 +108,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200"/>
                                 <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="60"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding Text}"
@@ -123,32 +128,35 @@
                                        Grid.Column="2"
                                        FontSize="12"/>
                             <!-- Werden an TodoItemModel properties gebunden -->
+                            <TextBlock Text="Priorität" 
+                                       Grid.Column="3"
+                                       FontSize="12"/>
+                            <materialDesign:RatingBar Value="{Binding Priority, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Grid.Column="4" 
+                                                      IsEnabled="False"
+                                                      Foreground="MediumBlue"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <!--ItemTemplate-Eigenschaft wird verwendet, um eine benutzerdefinierte Benutzeroberfläche zum Anzeigen der Datenelemente zu definieren. -->
             </ListBox>
-            <Button Grid.Column="3"
-                    Grid.Row="2"
-                    Command="{Binding RemoveTodoCommand}"
-                    Width="60" 
-                    Height="30"
-                    Background="DodgerBlue"
-                    Foreground="White"
-                    ToolTip="Ausgewähltes Todo Item löschen.">
+            <controls:CustomButton Grid.Column="3"
+                                   Grid.Row="2"
+                                   Command="{Binding RemoveTodoCommand}"
+                                   Width="60" 
+                                   Height="30"
+                                   ToolTip="Ausgewähltes Todo Item löschen.">
                 <materialDesign:PackIcon Kind="RemoveCircle" />
-            </Button>
-            <Button Grid.Column="3"
+            </controls:CustomButton>
+            <controls:CustomButton Grid.Column="3"
                     Grid.Row="4"
                     Width="60" 
                     Height="30"
                     Margin="10"
-                    Foreground="White"
-                    Background="DodgerBlue"
                     Command="{Binding RemoveAllTodoCommand}"
                     ToolTip="Alle Todo Items aus der Liste löschen.">
                 <materialDesign:PackIcon Kind="DatabaseRemove" />
-            </Button>
+            </controls:CustomButton>
         </Grid>
     </Grid>
 </mah:MetroWindow>
