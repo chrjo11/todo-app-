@@ -43,11 +43,10 @@
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CustomStates" >
                                 <VisualState x:Name="Clicked" >
-
                                 </VisualState>
                                 <VisualState x:Name="NeverClicked">
                                     <Storyboard>
-                                        <ColorAnimation To="Green"
+                                        <ColorAnimation To="RoyalBlue"
                                                             Storyboard.TargetName="BorderLine"
                                                             Storyboard.TargetProperty="Color" />
                                     </Storyboard>
@@ -64,7 +63,7 @@
                             </Border.Background>
 
                             <Border.BorderBrush>
-                                <SolidColorBrush x:Name="BorderLine" Color="DarkGray" />
+                                <SolidColorBrush x:Name="BorderLine" Color="DodgerBlue" />
                             </Border.BorderBrush>
                         </Border>
                     </Grid>

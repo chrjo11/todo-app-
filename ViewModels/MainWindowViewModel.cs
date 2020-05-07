@@ -21,7 +21,8 @@ namespace TodoApp.MVVM.ViewModels
 {
     class MainWindowViewModel : ViewModelBase //ViewModelBase: benachtrichtigt, wenn sich ein Property/Eigenschaftwert:z.B string geändert hat 
     {
-        
+        private readonly ITodoItemService _todoItemService; //im Konstruktor initialisiert und nicht mehr verändert
+
         public ActionCommand AddNewTodoCommand { get; } //property mit dem Datentyp ICommand (Interface)/ Eigenschaft / Hinzufügen Button mit der ListBox
         public ObservableCollection<TodoItemModel> Items { get; } //property für die Items der ListBox, die mit dem Hinzufügen Button hinzugefügt werden/Typ der Elemente in der Liste: string
 
@@ -30,9 +31,16 @@ namespace TodoApp.MVVM.ViewModels
 
         public ActionCommand NewCommandDownload { get; } //property für neuen Button 
 
-        private readonly ITodoItemService _todoItemService; //im Konstruktor initialisiert und nicht mehr verändert
-        
+        public string PathPicture { get; set; } //property für den Pfad vom Bild
+
         public IEnumerable<string> Tags { get; } //property für ComboBox
+
+        private int _priority; //Feld für Ratingbar
+        public int Priority
+        {
+            get { return _priority; }
+            set { _priority = value; }
+        }
 
         private string _todoItemText; //Feld für die TextBox
         public string TodoItemText //property für Text der TextBox
@@ -41,7 +49,7 @@ namespace TodoApp.MVVM.ViewModels
             set                           //Methode zum Setzen: kann die Validierung einiger Daten ausführen, bevor er dem privaten Feld einen Wert zuweist
             {
                 _todoItemText = value;
-                if (TodoItemText.Length > 0) //Wenn die Textlänge größer 0 ist
+                if(TodoItemText.Length > 0) //Wenn die Textlänge größer 0 ist
                 {
 
                     AddNewTodoCommand.IsEnabled = true; //Methodenaufruf: AddNewTodoCommand (Hinzufügen-Button) soll klickbar sein
@@ -64,12 +72,10 @@ namespace TodoApp.MVVM.ViewModels
                 if (SelectedItem != null)
                 {
                     RemoveTodoCommand.IsEnabled = true;
-                   
                 }
                 else
                 {
                     RemoveTodoCommand.IsEnabled = false;
-                    
                 }
             }
         }
@@ -84,8 +90,7 @@ namespace TodoApp.MVVM.ViewModels
             }
         }
 
-        public string PathPicture { get; set; } //property für den Pfad vom Bild
-        
+
         public MainWindowViewModel(
             ITodoItemService todoItemService,
             ITagService tagService) //Konstruktor mit Parameterübergabe
@@ -98,10 +103,8 @@ namespace TodoApp.MVVM.ViewModels
                                                                   //ButtonFreigebenCommand = new ActionCommand(ButtonFreigeben);
             RemoveAllTodoCommand = new ActionCommand(RemoveAllTodoItems);
             RemoveAllTodoCommand.IsEnabled = true;
-
             NewCommandDownload = new ActionCommand(NewDownloadAsync);
             NewCommandDownload.IsEnabled = true;
-
             _todoItemService = todoItemService; //Initialisierung
             Items = new ObservableCollection<TodoItemModel>(); //und leere Liste erstellt, sodass später bei den UnitTests die Abhängigkeit der TextDatei ignoriert werden kann
             var items = todoItemService.ReadTodoItems(); //Methodenaufruf, gibt eine Liste von Items zurück
@@ -109,6 +112,7 @@ namespace TodoApp.MVVM.ViewModels
             Tags = tagService.ReadTags(); //Methodenaufruf, gibt eine Liste von Tags zurück //Binding an ComboBox
                                            //vorher: Tags = new List<string>(){"Haushalt", "Einkauf"}; //Items der ComboBox
         }
+
 
         private async void NewDownloadAsync()
         {
@@ -144,15 +148,16 @@ namespace TodoApp.MVVM.ViewModels
         private void AddNewTodoItem() //Methode, um neues Item der ListBox anzuheften durch Klicken des Hinzufügen-Buttons
         {
             //Der Text, der im TextBox eingegeben wurde, soll dem Items=ListBox hinzugefügt werden
-            Items.Add(new TodoItemModel(TodoItemText, DateTime.Now, SelectedTag)); 
+            Items.Add(new TodoItemModel(TodoItemText, DateTime.Now, SelectedTag, Priority)); 
             _todoItemService.WriteTodoItems(Items.ToList()); //Methodenaufruf mit Übergabe einer Liste
             
 
             TodoItemText = ""; //Der Text soll nach dem Hinzufügen gelöscht werden, Kästchen soll wieder leer sein 
             RaisePropertyChanged(nameof(TodoItemText));   //RaisePropertyChanged-Methode soll ausgeführt werden mit der Instanzübergabe des strings TodoItemText ->""
-                                                    //Methodenaufruf immer ohne Datentyp: wird ausgeführt, weil sich das property geändert hat
-                                                    //(wurde ausgelagert) falls sich was ändert, muss nur noch RaisePropertyChanged-Methode aufgerufen werden
-
+                                                          //Methodenaufruf immer ohne Datentyp: wird ausgeführt, weil sich das property geändert hat
+                                                          //(wurde ausgelagert) falls sich was ändert, muss nur noch RaisePropertyChanged-Methode aufgerufen werden
+            Priority = 0;
+            RaisePropertyChanged(nameof(Priority));
         }
 
         private void RemoveTodoItem() //Methode, um ausgewähltes Item aus der ListBox zu entfernen durch Klicken des Erledigt-Button

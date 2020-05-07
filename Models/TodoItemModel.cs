@@ -13,7 +13,7 @@ namespace TodoApp.MVVM.Converter
             get;
         }
 
-        public DateTime CreatedAt //vorher:  Uhrzeit + Konstruktor verbessert
+        public DateTime CreatedAt
         {
             get;
         }
@@ -22,20 +22,24 @@ namespace TodoApp.MVVM.Converter
         public string Tag
         {
             get;
-           
         }
 
-        public TodoItemModel(string text, DateTime createdAt, string tag) //Konstruktor: leere Zeile mit Werkzeug (links) angelegt
+        public int Priority
+        {
+            get;
+        }
+
+        public TodoItemModel(string text, DateTime createdAt, string tag, int priority) //Konstruktor: leere Zeile mit Werkzeug (links) angelegt
         {
             Text = text;
             CreatedAt = createdAt;
             Tag = tag;
+            Priority = priority;
         }
 
         public override string ToString()
         {
             return Text;
-
         }
     }
 }
