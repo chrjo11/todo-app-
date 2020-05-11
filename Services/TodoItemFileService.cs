@@ -15,6 +15,8 @@ namespace TodoApp.MVVM.Converter
     {
         private readonly string _path;
 
+        public IEnumerable<TodoItemModel> WrittenModels { get; private set; } //ist eine Liste vom Typ TodoItemModel 
+
         public IEnumerable<TodoItemModel> ReadTodoItems() //Liest die Datei aus und gibt die Liste mit den Lines zurück 
         {
             if (File.Exists(_path)) //Wenn Datei existiert
@@ -35,7 +37,7 @@ namespace TodoApp.MVVM.Converter
             string s = JsonConvert.SerializeObject(Items, Formatting.Indented); //serialisieren: TodoItemModel in string konvertieren
                                                                                 //Formatting: gibt an, wie der Output formatiert werden soll: eingerückt
             File.WriteAllText(_path, s); //Der Text soll der Datei hinzugefügt werden: path = welcher Datei, string = was soll geschrieben werden
-        
+            WrittenModels = Items;
         }
 
         public TodoItemFileService(IAppConfiguration appConfiguration) //man übergibt die Abhängigkeit dem Konstruktor

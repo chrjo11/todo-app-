@@ -3,5 +3,5 @@
   "Einkauf",
   "Arbeit",
   "Organisatorisches",
-  "Schule"
+  "Studium"
 ]

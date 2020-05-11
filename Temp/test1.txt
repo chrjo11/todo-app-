@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Text": "Spülmaschine ausräumen",
     "CreatedAt": "2020-03-25T13:50:50.4637169+01:00",
@@ -24,9 +24,9 @@
     "Priority": 5
   },
   {
-    "Text": "Lebensmittel einkaufen",
-    "CreatedAt": "2020-05-06T10:27:09.8956174+02:00",
-    "Tag": "Einkauf",
+    "Text": "PR-Bericht schreiben",
+    "CreatedAt": "2020-05-07T08:55:22.7307622+02:00",
+    "Tag": "Studium",
     "Priority": 3
   }
 ]
