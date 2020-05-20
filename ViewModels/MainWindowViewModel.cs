@@ -19,7 +19,7 @@ using TodoApp.MVVM.Services;
 
 namespace TodoApp.MVVM.ViewModels
 {
-    class MainWindowViewModel : ViewModelBase //ViewModelBase: benachtrichtigt, wenn sich ein Property/Eigenschaftwert:z.B string geändert hat 
+    class MainWindowViewModel : ViewModelBase, IDataErrorInfo //ViewModelBase: benachtrichtigt, wenn sich ein Property/Eigenschaftwert:z.B string geändert hat 
     {
         private readonly ITodoItemService _todoItemService; //im Konstruktor initialisiert und nicht mehr verändert
 
@@ -49,18 +49,19 @@ namespace TodoApp.MVVM.ViewModels
             set                           //Methode zum Setzen: kann die Validierung einiger Daten ausführen, bevor er dem privaten Feld einen Wert zuweist
             {
                 _todoItemText = value;
-                if(TodoItemText.Length > 0) //Wenn die Textlänge größer 0 ist
+                if (TodoItemText.Length > 0) //Wenn die Textlänge größer 0 ist
                 {
-
                     AddNewTodoCommand.IsEnabled = true; //Methodenaufruf: AddNewTodoCommand (Hinzufügen-Button) soll klickbar sein
+                    //ResetError(TodoItemText);
+                    SetError(nameof(TodoItemText), "");
                 }
-                else //Ansonsten
+                else 
                 {
                     AddNewTodoCommand.IsEnabled = false; //Methodenaufruf: AddNewTodoCommand (Hinzufügen-Button) soll nicht klickbar sein, wenn kein Text in die TextBox eingegeben ist
+                    SetError(nameof(TodoItemText), "TodoItem - text kann nicht leer sein.");
                 }
             }
         }
-
 
         private TodoItemModel _selectedItem; //Feld für ListBox
         public TodoItemModel SelectedItem //property für die Items der ListBox/Ziel: ausgewähltes Item mit Erledigt Button löschen
@@ -80,7 +81,7 @@ namespace TodoApp.MVVM.ViewModels
             }
         }
 
-        private string _selectedTag; 
+        private string _selectedTag;
         public string SelectedTag //property für ComboBox: ausgewählter Tag soll dem TodoItemModel Tag zugewiesen bekommen
         {
             get { return _selectedTag; }
@@ -91,14 +92,57 @@ namespace TodoApp.MVVM.ViewModels
         }
 
 
+        // Binding an TextBlock, der un-/sichtbar geschaltet werden kann (HasErrors)
+        public string Error
+        {
+            get
+            {
+                string joinedErrors = null;
+
+                // läuft durch das Dictionary Errors durch und fügt Einträge zu einem Error zusammen
+                foreach (string key in Errors.Keys)
+                {
+                    if (!String.IsNullOrEmpty(joinedErrors))
+                    {
+                        joinedErrors += "\n";
+                    }
+
+                    joinedErrors += Errors[key];
+                }
+
+                return joinedErrors;
+            }
+        }
+
+        // speichert property und errormessage
+        public Dictionary<string, string> Errors { get; } 
+
+        // gets errormessage für das übergebene Property
+        public string this[string columnName] => ValidateProperty(columnName);
+
+        // überprüft, ob es einen Error gibt -> bool
+        public bool HasErrors
+        {
+            get { return !String.IsNullOrEmpty(Error); }
+        }
+
+        // Methode überprüft, ob das Property im Errors Dictionary vorhanden ist
+        // Wenn ja: gets propertyName und gibts zurück
+        // Wenn nein: wird null zurückgegeben
+        private string ValidateProperty(string propertyName)
+        {
+            return Errors.ContainsKey(propertyName) ? Errors[propertyName] : null;
+        }
+
+
         public MainWindowViewModel(
             ITodoItemService todoItemService,
             ITagService tagService) //Konstruktor mit Parameterübergabe
                                     //in MainWindow.xaml.cs wird neues Object von MWVM angelegt und Parameter übergeben: neues Object vom Typ TodoItemFileService
         {
+            Errors = new Dictionary<string, string>();
             AddNewTodoCommand = new ActionCommand(AddNewTodoItem); //man erzeugt ein Object und übergibt die Binding-Quelle/Methode
                                                                    //Ziel: Wenn der Hinzufügen Button gedrückt wird, soll der Text in der TextBox der ListBox hinzugefügt werden
-
             RemoveTodoCommand = new ActionCommand(RemoveTodoItem);//Ziel: Wenn Erledigt-Button gedrückt wird, soll das ausgewählte Item gelöscht werden
                                                                   //ButtonFreigebenCommand = new ActionCommand(ButtonFreigeben);
             RemoveAllTodoCommand = new ActionCommand(RemoveAllTodoItems);
@@ -114,7 +158,33 @@ namespace TodoApp.MVVM.ViewModels
         }
 
 
-        private async void NewDownloadAsync()
+        // Methode, die den Error rückgängig macht bzw. aus dem Dictionary löscht
+        public void ResetError(string propertyName)
+        {
+            SetError(propertyName, default(string));
+        }
+        
+        // Methode, die unter bestimmten Bedingungen Errors Dictionary erweitert/kürzt
+        protected virtual void SetError(string propertyName, string errorMessage)
+        {
+            if (String.IsNullOrEmpty(errorMessage))
+            {
+                Errors.Remove(propertyName);
+            }
+            else if (Errors.ContainsKey(propertyName) && Errors.Count != 0)
+            {
+                Errors[propertyName] = errorMessage;
+            }
+            else
+            {
+                Errors.Add(propertyName, errorMessage);
+            }
+
+            RaisePropertyChanged("Error");
+            RaisePropertyChanged("HasErrors");
+        }
+
+            private async void NewDownloadAsync()
         {
             string url = "http://hintergrundbilder-pc.de/hintergrundbilder-fruehling-06-bilder/bilder-1920x1080/fruehling-107.jpg";
             //string url2 = "http://www.hintergrundbilder-pc.de/hintergrundbilder-fruehling-02-bilder/bilder-1920x1080/fruehling-025.jpg";
@@ -151,14 +221,16 @@ namespace TodoApp.MVVM.ViewModels
             Items.Add(new TodoItemModel(TodoItemText, DateTime.Now, SelectedTag, Priority)); 
             _todoItemService.WriteTodoItems(Items.ToList()); //Methodenaufruf mit Übergabe einer Liste
             
-
             TodoItemText = ""; //Der Text soll nach dem Hinzufügen gelöscht werden, Kästchen soll wieder leer sein 
             RaisePropertyChanged(nameof(TodoItemText));   //RaisePropertyChanged-Methode soll ausgeführt werden mit der Instanzübergabe des strings TodoItemText ->""
                                                           //Methodenaufruf immer ohne Datentyp: wird ausgeführt, weil sich das property geändert hat
                                                           //(wurde ausgelagert) falls sich was ändert, muss nur noch RaisePropertyChanged-Methode aufgerufen werden
             Priority = 0;
             RaisePropertyChanged(nameof(Priority));
+            ResetError(nameof(TodoItemText));
+            SetError(nameof(TodoItemText), "TodoItem - text kann nicht leer sein.");
         }
+
 
         private void RemoveTodoItem() //Methode, um ausgewähltes Item aus der ListBox zu entfernen durch Klicken des Erledigt-Button
         {
