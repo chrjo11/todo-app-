@@ -93,6 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\ValidationViewModel.cs" />
     <Compile Include="Controls\CustomButton.cs" />
     <Compile Include="Controls\CustomTextBox.cs" />
     <Compile Include="IoCConfiguration.cs" />

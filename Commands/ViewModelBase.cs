@@ -9,8 +9,7 @@ using System.Windows.Input;
 
 namespace TodoApp.MVVM.Commands
 {
-    class ViewModelBase : INotifyPropertyChanged //erbt von einem Interface: benachrichtigt, wenn sich was geändert hat
-
+    class ViewModelBase : ValidationViewModel, INotifyPropertyChanged //erbt von einem Interface: benachrichtigt, wenn sich was geändert hat
     {
         public event PropertyChangedEventHandler PropertyChanged; //hier wird ein event/Ereignis deklariert es heißt PropertyChanged
                                                                   //PropertyChangedEventHandler: wird ausgelöst, wenn sich ein property/Eigenschaft ändert
