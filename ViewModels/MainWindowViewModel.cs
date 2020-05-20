@@ -19,7 +19,7 @@ using TodoApp.MVVM.Services;
 
 namespace TodoApp.MVVM.ViewModels
 {
-    class MainWindowViewModel : ViewModelBase, IDataErrorInfo //ViewModelBase: benachtrichtigt, wenn sich ein Property/Eigenschaftwert:z.B string geändert hat 
+    class MainWindowViewModel : ViewModelBase //ViewModelBase: benachtrichtigt, wenn sich ein Property/Eigenschaftwert:z.B string geändert hat 
     {
         private readonly ITodoItemService _todoItemService; //im Konstruktor initialisiert und nicht mehr verändert
 
@@ -87,56 +87,12 @@ namespace TodoApp.MVVM.ViewModels
             }
         }
 
-        // Eingabevalidierung (Benutzer)
-        // Binding an TextBlock, der un-/sichtbar geschaltet werden kann (HasErrors)
-        public string Error
-        {
-            get
-            {
-                string joinedErrors = null;
-
-                // läuft durch das Dictionary Errors durch und fügt Einträge zu einem Error zusammen
-                foreach (string key in Errors.Keys)
-                {
-                    if (!String.IsNullOrEmpty(joinedErrors))
-                    {
-                        joinedErrors += "\n";
-                    }
-
-                    joinedErrors += Errors[key];
-                }
-
-                return joinedErrors;
-            }
-        }
-
-        // speichert property und errormessage
-        public Dictionary<string, string> Errors { get; }
-
-        // gets errormessage für das übergebene Property
-        public string this[string columnName] => ValidateProperty(columnName);
-
-        // überprüft, ob es einen Error gibt -> bool
-        public bool HasErrors
-        {
-            get { return !String.IsNullOrEmpty(Error); }
-        }
-
-        // Methode überprüft, ob das Property im Errors Dictionary vorhanden ist
-        // Wenn ja: gets propertyName und gibts zurück
-        // Wenn nein: wird null zurückgegeben
-        private string ValidateProperty(string propertyName)
-        {
-            return Errors.ContainsKey(propertyName) ? Errors[propertyName] : null;
-        }
-
 
         public MainWindowViewModel(
             ITodoItemService todoItemService,
             ITagService tagService) //Konstruktor mit Parameterübergabe
                                     //in MainWindow.xaml.cs wird neues Object von MWVM angelegt und Parameter übergeben: neues Object vom Typ TodoItemFileService
         {
-            Errors = new Dictionary<string, string>();
             AddNewTodoCommand = new ActionCommand(AddNewTodoItem); //man erzeugt ein Object und übergibt die Binding-Quelle/Methode
                                                                    //Ziel: Wenn der Hinzufügen Button gedrückt wird, soll der Text in der TextBox der ListBox hinzugefügt werden
             RemoveTodoCommand = new ActionCommand(RemoveTodoItem);//Ziel: Wenn Erledigt-Button gedrückt wird, soll das ausgewählte Item gelöscht werden
